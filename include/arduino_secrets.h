@@ -1,0 +1,46 @@
+// Fill in  your WiFi networks SSID and password
+#define SECRET_SSID "***REMOVED***"
+#define SECRET_PASS "***REMOVED***"
+
+// Fill in the hostname of your AWS IoT broker
+#define SECRET_BROKER "***REMOVED***"
+
+// Fill in the boards public certificate
+const char SECRET_CERTIFICATE[] = R"(
+-----BEGIN CERTIFICATE-----
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+-----END CERTIFICATE-----
+)";
