@@ -59,7 +59,7 @@ void setup() {
   //Serial.begin(115200);
   //while (!Serial);
 
-  a = 2;
+  a = 3;
   if (!ECCX08.begin()) {
  //   Serial.println("No ECCX08 present!");
     while (1);
