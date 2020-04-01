@@ -25,6 +25,10 @@
 #include <ArduinoMqttClient.h>
 #include <WiFiNINA.h> // change to #include <WiFi101.h> for MKR1000
 #include <Arduino_MKRENV.h>
+#include <arduinoUnity.h>
+#include <stdio.h>
+#include "test.h"
+
 
 #include "arduino_secrets.h"
 extern ENVClass ENV;
@@ -49,8 +53,10 @@ MqttClient    mqttClient(sslClient);
 unsigned long lastMillis = 0;
 
 void setup() {
+  // --- Serial output -- uncomment Serial commands in order to debug with Serial monitor
+  // --- Deactivated to automatically send MQTT messages after booting Arduino
   //Serial.begin(115200);
- // while (!Serial);
+  //while (!Serial);
 
   if (!ECCX08.begin()) {
  //   Serial.println("No ECCX08 present!");
@@ -96,8 +102,9 @@ void loop() {
   // poll for new MQTT messages and send keep alives
   mqttClient.poll();
 
-  // publish a message roughly every 5 seconds.
-  if (millis() - lastMillis > 5000) {
+  // publish a message roughly every 60 seconds.
+  if (millis() - lastMillis > 60000) {
+    
     lastMillis = millis();
 
     publishMessage();
@@ -147,40 +154,46 @@ void connectMQTT() {
 void publishMessage() {
   //Serial.println("Publishing message");
 
-
+  
   // send message, the Print interface can be used to set the message contents
-  mqttClient.beginMessage("arduino/outgoing");
-  mqttClient.print("Temperature: ");
+  mqttClient.beginMessage("iot/topic/outgoing");
+  mqttClient.println("{");
+  mqttClient.print(" \"timestamp\": ");
+  mqttClient.print(getTime());
+  mqttClient.println(",");
+  mqttClient.print(" \"temp\": ");
   mqttClient.print(ENV.readTemperature());
-  mqttClient.println(" °C");
-  mqttClient.print("Humidity: ");
+  mqttClient.println(",");
+  mqttClient.print(" \"hum\": ");
   mqttClient.print(ENV.readHumidity());
-  mqttClient.println(" %");
-  mqttClient.print("Pressure: ");
+  mqttClient.println(",");
+  mqttClient.print(" \"pres\": ");
   mqttClient.print(ENV.readPressure());
-  mqttClient.println(" kPa");
-  mqttClient.print("Illuminance: ");
+  mqttClient.println(",");
+  mqttClient.print(" \"ill\": ");
   mqttClient.print(ENV.readIlluminance());
-  mqttClient.println(" LUX");
-  mqttClient.print("UV: ");
-  mqttClient.print(ENV.readUVIndex());
-  mqttClient.println(" ");
+  mqttClient.println(",");
+  mqttClient.print(" \"uv\": ");
+  mqttClient.println(ENV.readUVIndex());
+  mqttClient.println("}");
   mqttClient.endMessage();
 }
 
 void onMessageReceived(int messageSize) {
   // we received a message, print out the topic and contents
-  Serial.print("Received a message with topic '");
-  Serial.print(mqttClient.messageTopic());
-  Serial.print("', length ");
-  Serial.print(messageSize);
-  Serial.println(" bytes:");
+  //Serial.print("Received a message with topic '");
+  //Serial.print(mqttClient.messageTopic());
+  //Serial.print("', length ");
+  //Serial.print(messageSize);
+  //Serial.println(" bytes:");
 
   // use the Stream interface to print the contents
   while (mqttClient.available()) {
     Serial.print((char)mqttClient.read());
   }
-  Serial.println();
+  //Serial.println();
 
-  Serial.println();
+  //Serial.println();
+
 }
+
