@@ -51,6 +51,7 @@ BearSSLClient sslClient(wifiClient); // Used for SSL/TLS connection, integrates 
 MqttClient    mqttClient(sslClient);
 
 unsigned long lastMillis = 0;
+int a = 0;
 
 void setup() {
   // --- Serial output -- uncomment Serial commands in order to debug with Serial monitor
@@ -58,6 +59,7 @@ void setup() {
   //Serial.begin(115200);
   //while (!Serial);
 
+  a = 2;
   if (!ECCX08.begin()) {
  //   Serial.println("No ECCX08 present!");
     while (1);
