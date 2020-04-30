@@ -15,5 +15,5 @@ Upload code to target Arduino MKR Wifi 1010:
 pio run --target upload
 ```
 
-**In order to connect Arduino to AWS IoT, you need to register the device with AWS IoT Core, use instructions below**
+**In order to connect Arduino to AWS IoT, you need to register the device with AWS IoT Core, refer to instructions:**
 [Arduino AWS IoT Core](https://create.arduino.cc/projecthub/Arduino_Genuino/securely-connecting-an-arduino-mkr-wifi-1010-to-aws-iot-core-a9f365)
